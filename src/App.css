@@ -40,3 +40,16 @@
 .read-the-docs {
   color: #888;
 }
+
+.counter.plus {
+  color: green;
+}
+
+.counter.minus {
+  color: red;
+}
+
+.counter.zero {
+  color: gray;
+}
+

@@ -1,35 +1,39 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [count, setCount] = React.useState(() => {
+        const saved = localStorage.getItem('count');
+        return saved !== null ? Number(saved) : 0;
+    });
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    React.useEffect(() => {
+        localStorage.setItem('count', count);
+    }, [count])
+    let counterClass = count > 0 ? 'plus' : count < 0 ? 'minus' : 'zero';
+
+
+    function changeCount(amount) {
+        setCount(count + amount);
+        console.log(amount);
+    }
+
+    function ResetCounter() {
+        setCount(0);
+    }
+
+    return (
+        <div className="main">
+            <h2 className="text">Счёт:</h2>
+            <h3 className={`counter ${counterClass}`}>{count}</h3>
+            <button onClick={() => changeCount(-5)} className="minus">-5</button>
+            <button onClick={() => changeCount(-1)} className="minus">- Минус</button>
+            <button onClick={() => changeCount(+1)} className="plus">Плюс +</button>
+            <button onClick={() => changeCount(+5)} className="plus">+5</button>
+            <br/>
+            <button onClick={ResetCounter} className="reset">Сбросить число</button>
+        </div>
+    )
 }
 
-export default App
+export default App;
