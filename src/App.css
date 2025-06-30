@@ -33,23 +33,38 @@
   }
 }
 
-.card {
-  padding: 2em;
+.counter-history {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 300px;
+  max-height: 500px;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  padding: 1.5rem ;
+  z-index: 10;
 }
 
-.read-the-docs {
-  color: #888;
+.history {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  max-height: 600px;
 }
 
-.counter.plus {
+.history li {
+  padding: 0.25em 0;
+  border-bottom: 1px solid #eee;
+}
+
+.counter.plus, .history .plus {
   color: green;
 }
 
-.counter.minus {
+.counter.minus, .history .minus {
   color: red;
 }
 
-.counter.zero {
+.counter.zero, .history .zero {
   color: gray;
 }
-

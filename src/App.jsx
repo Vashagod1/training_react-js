@@ -10,17 +10,32 @@ function App() {
     React.useEffect(() => {
         localStorage.setItem('count', count);
     }, [count])
+    const [history, setHistory] = React.useState([]);
     let counterClass = count > 0 ? 'plus' : count < 0 ? 'minus' : 'zero';
+
 
 
     function changeCount(amount) {
         setCount(count + amount);
-        console.log(amount);
     }
 
     function ResetCounter() {
         setCount(0);
     }
+
+    React.useEffect(() => {
+        setHistory(prev => [...prev, count]);
+    }, [count]);
+
+    React.useEffect(() => {
+        if (history.length > 10) {
+            setHistory(history.slice(1));
+        }
+    }, [history]);
+
+    React.useEffect(() => {
+        console.log('Текущий счёт:', count);
+    }, [count]);
 
     return (
         <div className="main">
@@ -32,6 +47,16 @@ function App() {
             <button onClick={() => changeCount(+5)} className="plus">+5</button>
             <br/>
             <button onClick={ResetCounter} className="reset">Сбросить число</button>
+            <div className="counter-history">
+                <h2 className="text">История изменений счётчика:</h2>
+                <ul className="history">
+                    {history.map((item, index) => (
+                        <li key={index} className={item > 0 ? 'plus' : item < 0 ? 'minus' : 'zero'}>
+                            {item}
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </div>
     )
 }
